@@ -5,6 +5,7 @@ import { stringPages } from "./string-pages";
 import { team } from "./data";
 import { Layout } from "./views/Layout.tsx";
 import { etaPages } from "./eta-pages";
+import { serveStatic } from "@hono/bun";
 
 const app = new Hono();
 app.use(logger()); // one line: every request logged with status and time
@@ -17,6 +18,7 @@ app.get("/", (c) => {
     </Layout>,
   );
 });
+app.use("*", serveStatic({ root: "./public" }));
 
 app.get("/team", (c) =>
   c.html(
@@ -43,6 +45,28 @@ app.get("/time", (c) => {
 
 app.route("/strings", stringPages);
 app.route("/eta", etaPages);
+
+import { readdir } from "node:fs/promises";
+
+// step 7b: a page that lists a folder
+app.get("/files", async (c) => {
+  const names = await readdir("./public");
+  const files = names.map((name) => ({ name, size: Bun.file(`./public/${name}`).size }));
+  return c.html(
+    <Layout title="Files">
+      <h1>public/</h1>
+      <ul>
+        {files.map((file) => (
+          <li>
+            <a href={`/${file.name}`}>{file.name}</a> — {file.size} bytes
+          </li>
+        ))}
+      </ul>
+    </Layout>,
+  );
+});
+
 app.notFound((c) => c.json({ error: "Not found", path: c.req.path }, 404));
+
 
 export default app; // Bun sees a default export with fetch() and serves it
