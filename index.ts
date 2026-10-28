@@ -5,8 +5,15 @@ import { logger } from "hono/logger";
 const app = new Hono();
 app.use(logger());
 
+<<<<<<< HEAD
 
 
+=======
+app.get("/", (c) => {
+  c.header("X-Course", "advanced-web");
+  return c.text("Hello from Hono!\n");
+});
+>>>>>>> 87462d03329a2f0307dc387b1ea60c222d4f7857
 app.get("/echo", (c) => c.json({ hello: c.req.query("name") ?? "stranger" }));
 app.post("/echo", async (c) => {
   const body = await c.req.text();
