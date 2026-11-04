@@ -2,16 +2,13 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
-
 const app = new Hono();
 app.use(logger());
-
-
 
 app.get("/echo", (c) => c.json({ hello: c.req.query("name") ?? "stranger" }));
 app.post("/echo", async (c) => {
   const body = await c.req.text();
-  return c.json({ youSent: body, contentType: c.req.header("content-type") });
+  return c.json({ contentType: c.req.header("content-type"), youSent: body });
 });
 app.get("/time", (c) => {
   c.header("Cache-Control", "no-store");
@@ -19,8 +16,12 @@ app.get("/time", (c) => {
 });
 
 // step 3: responses by hand
-app.get("/api/status", (c) => c.json({ ok: true, uptime: Math.round(process.uptime()) }));
-app.get("/hello", (c) => c.html(`<h1>Hello, ${c.req.query("name") ?? "stranger"}!</h1>`));
+app.get("/api/status", (c) =>
+  c.json({ ok: true, uptime: Math.round(process.uptime()) })
+);
+app.get("/hello", (c) =>
+  c.html(`<h1>Hello, ${c.req.query("name") ?? "stranger"}!</h1>`)
+);
 app.get("/teapot", (c) => {
   c.header("X-Brewed-By", "Hono");
   return c.text("I'm a teapot\n", 418);

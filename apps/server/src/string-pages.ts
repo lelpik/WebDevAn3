@@ -1,5 +1,6 @@
 // src/string-pages.ts — pages built from strings, by hand
 import { Hono } from "hono";
+
 import { team } from "./data";
 
 export function layout(title: string, body: string): string {

@@ -1,6 +1,6 @@
+import { type Entrance, fieldErrors, NewEntrance } from "@office/shared";
 // apps/web/src/EntranceForm.tsx — a controlled form, validated by hand
 import { type FormEvent, useState } from "react";
-import { type Entrance, fieldErrors, NewEntrance } from "@office/shared";
 
 type Errors = Record<string, string>;
 
@@ -19,7 +19,11 @@ export function EntranceForm({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault(); // no page reload: React handles the submit
     // the same checks as the server's, written a second time
-const result = NewEntrance.safeParse({ address, floors: Number(floors), hasElevator });
+    const result = NewEntrance.safeParse({
+      address,
+      floors: Number(floors),
+      hasElevator,
+    });
     if (!result.success) {
       setErrors(fieldErrors(result.error));
       return;
@@ -48,7 +52,7 @@ const result = NewEntrance.safeParse({ address, floors: Number(floors), hasEleva
         Address
         <input onChange={(e) => setAddress(e.target.value)} value={address} />
       </label>
-      
+
       {errors.address && <p className="error">{errors.address[0]}</p>}
       <label>
         Floors
@@ -58,7 +62,7 @@ const result = NewEntrance.safeParse({ address, floors: Number(floors), hasEleva
           value={floors}
         />
       </label>
-{errors.floors && <p className="error">{errors.floors[0]}</p>}
+      {errors.floors && <p className="error">{errors.floors[0]}</p>}
       <label>
         <input
           checked={hasElevator}
