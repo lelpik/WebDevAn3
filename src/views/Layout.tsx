@@ -17,9 +17,8 @@ export function Layout({ title, children }: LayoutProps) {
           <img src="/logo.svg" alt="" width="24" height="24" />
         </head>
         <body>
-          <nav>
-            <a href="/">Home</a> · <a href="/team">Team</a>
-          </nav>
+   <a href="/">Home</a> · <a href="/team">Team</a> · <a href="/about">About</a>
+          
           <main>{children}</main>
           <footer>Office site · week 2</footer>
         </body>
