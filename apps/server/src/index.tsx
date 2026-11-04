@@ -5,7 +5,7 @@ import { serveStatic } from "@hono/bun";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-
+import { buildingsApi } from "./buildings";
 import { team } from "./data";
 import { entrancesApi } from "./entrances";
 import { etaPages } from "./eta-pages";
@@ -19,9 +19,12 @@ const app = new Hono<Env>();
 
 app.use(logger());
 
+
+
 app.use("/api/*", cors({ origin: "http://localhost:5173" }));
 
 app.route("/api/entrances", entrancesApi);
+app.route("/api/buildings", buildingsApi);
 
 app.use("/api/*", async (c, next) => {
   await next();
