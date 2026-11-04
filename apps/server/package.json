@@ -5,11 +5,14 @@
   "module": "index.ts",
   "scripts": {
     "typecheck": "bun check",
-    "dev": "bun --watch src/index.tsx"
+    "dev": "bun --watch src/index.tsx",
+    "migrate": "bun scripts/migrate.ts",
+    "seed": "bun scripts/seed.ts"
   },
   "dependencies": {
     "@hono/bun": "^1.0.1",
     "@office/shared": "workspace:*",
+    "db": "^6.0.3",
     "eta": "^4.6.0",
     "hono": "^4.13.13"
   },

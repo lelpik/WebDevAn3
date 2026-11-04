@@ -9,7 +9,9 @@
     "dev:server": "bun run --filter server dev",
     "dev:web": "bun run --filter web dev",
     "check": "ultracite check",
-    "fix": "ultracite fix"
+    "fix": "ultracite fix",
+    "migrate": "bun run --filter server migrate",
+    "seed": "bun run --filter server seed"
   },
   "devDependencies": {
     "oxfmt": "^0.75.0",

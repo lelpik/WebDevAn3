@@ -1,4 +1,9 @@
-import { type Entrance, fieldErrors, NewEntrance } from "@office/shared";
+import {
+  type Building,
+  type Entrance,
+  fieldErrors,
+  NewEntrance,
+} from "@office/shared";
 // apps/web/src/EntranceForm.tsx — a controlled form, validated by hand
 import { type FormEvent, useState } from "react";
 
@@ -6,11 +11,14 @@ type Errors = Record<string, string>;
 
 export function EntranceForm({
   api,
+  buildings,
   onCreated,
 }: {
   api: string;
+  buildings: Building[];
   onCreated: (entrance: Entrance) => void;
 }) {
+  const [buildingId, setBuildingId] = useState("");
   const [address, setAddress] = useState("");
   const [floors, setFloors] = useState("");
   const [hasElevator, setHasElevator] = useState(false);
@@ -20,7 +28,8 @@ export function EntranceForm({
     e.preventDefault(); // no page reload: React handles the submit
     // the same checks as the server's, written a second time
     const result = NewEntrance.safeParse({
-      address,
+    address,
+      buildingId: Number(buildingId), // "" → 0 → "Pick a building"
       floors: Number(floors),
       hasElevator,
     });
@@ -48,6 +57,21 @@ export function EntranceForm({
 
   return (
     <form noValidate onSubmit={handleSubmit}>
+         <label>
+        Building
+        <select
+          onChange={(e) => setBuildingId(e.target.value)}
+          value={buildingId}
+        >
+          <option value="">Pick a building…</option>
+          {buildings.map((building) => (
+            <option key={building.id} value={building.id}>
+              {building.name}, {building.city}
+            </option>
+          ))}
+        </select>
+      </label>
+      {errors.buildingId && <p className="error">{errors.buildingId[0]}</p>}
       <label>
         Address
         <input onChange={(e) => setAddress(e.target.value)} value={address} />
