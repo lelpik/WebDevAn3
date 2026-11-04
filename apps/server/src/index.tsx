@@ -15,13 +15,16 @@ const app = new Hono<Env>();
 
 app.use(logger());
 
+app.use("/api/*", cors({ origin: "http://localhost:5173" }));
+
 app.route("/api/entrances", entrancesApi);
 
-app.use("/api/*", cors({ origin: "http://localhost:5173" }));
 app.use("/api/*", async (c, next) => {
   await next();
   c.header("Access-Control-Allow-Origin", "http://localhost:5173");
 });
+
+
 
 // step 8: a middleware of our own
 app.use(async (c, next) => {

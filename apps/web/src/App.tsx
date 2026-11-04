@@ -1,6 +1,7 @@
 // apps/web/src/App.tsx — the list comes from the server
 import { useEffect, useState } from "react";
 import type { Entrance } from "@office/shared";
+import { EntranceForm } from "./EntranceForm";
 
 const API = "http://localhost:3000";
 
@@ -10,6 +11,9 @@ function EntranceItem({ entrance }: { entrance: Entrance }) {
       {entrance.address} — {entrance.floors} floors
       {entrance.hasElevator ? ", elevator" : ""}
     </li>
+
+
+    
   );
 }
 
@@ -44,6 +48,10 @@ export default function App() {
         {entrances.map((entrance) => (
           <EntranceItem entrance={entrance} key={entrance.id} />
         ))}
+        <EntranceForm
+        api={API}
+        onCreated={(entrance) => setEntrances([...entrances, entrance])}
+      />
       </ul>
     </main>
   );
