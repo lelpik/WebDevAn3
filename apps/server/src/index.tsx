@@ -7,11 +7,14 @@ import { team } from "./data";
 import { etaPages } from "./eta-pages";
 import { stringPages } from "./string-pages";
 import { Layout } from "./views/Layout";
+import { entrancesApi } from "./entrances";
 
 type Env = { Variables: { requestId: string } };
 const app = new Hono<Env>();
 
 app.use(logger());
+
+app.route("/api/entrances", entrancesApi);
 
 // step 8: a middleware of our own
 app.use(async (c, next) => {
