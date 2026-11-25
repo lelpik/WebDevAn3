@@ -28,4 +28,5 @@ export type Entrance = NewEntrance & { id: number; buildingName: string };
 // { address?: string[], floors?: string[], … } — the shape both sides show
 export function fieldErrors(error: z.ZodError) {
   return z.flattenError(error).fieldErrors;
-}
+}'// probe' 
+'// probe' 

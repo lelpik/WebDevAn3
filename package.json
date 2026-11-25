@@ -1,21 +1,30 @@
 {
   "name": "office",
   "private": true,
+  "packageManager": "bun@1.4.4",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
+    "check": "ultracite check",
+    "dev": "turbo run dev",
     "dev:server": "bun run --filter server dev",
     "dev:web": "bun run --filter web dev",
-    "check": "ultracite check",
     "fix": "ultracite fix",
     "migrate": "bun run --filter server migrate",
-    "seed": "bun run --filter server seed"
+    "prepare": "husky",
+    "seed": "bun run --filter server seed",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
+    "turbo": "2.11.10",
     "ultracite": "8.1.1"
+  },
+  "dependencies": {
+    "husky": "^9.1.7"
   }
 }
