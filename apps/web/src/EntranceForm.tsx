@@ -6,23 +6,18 @@ import {
 } from "@office/shared";
 // apps/web/src/EntranceForm.tsx — a controlled form, validated by hand
 import { type FormEvent, useState } from "react";
+import { API } from "./api";
 
 type Errors = Record<string, string>;
 
 export function EntranceForm({
-  api,
   buildings,
   onCreated,
 }: {
-  api: string;
   buildings: Building[];
   onCreated: (entrance: Entrance) => void;
 }) {
-  const [buildingId, setBuildingId] = useState("");
-  const [address, setAddress] = useState("");
-  const [floors, setFloors] = useState("");
-  const [hasElevator, setHasElevator] = useState(false);
-  const [errors, setErrors] = useState<Errors>({});
+
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault(); // no page reload: React handles the submit
@@ -39,7 +34,7 @@ export function EntranceForm({
     }
     setErrors({});
 
-    const res = await fetch(`${api}/api/entrances`, {
+     const res = await fetch(`${API}/api/entrances`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address, floors: Number(floors), hasElevator }),

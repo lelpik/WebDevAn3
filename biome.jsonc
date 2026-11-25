@@ -1,0 +1,34 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/biome/core"],
+  "files": {
+    // copied from the contract's repository, written by drizzle-kit or by
+    // the router's plugin: never reformatted here
+    "includes": [
+      "!packages/contract",
+      "!apps/server/drizzle",
+      "!apps/web/src/routeTree.gen.ts"
+    ]
+  },
+  "javascript": {
+    // Bun is a global on the server, like window in the browser
+    "globals": ["Bun"]
+  },
+  "linter": {
+    "rules": {
+      // the team's choices, each with its reason
+      "a11y": {
+        // logo.svg and favicon.svg are decoration, not content
+        "noSvgWithoutTitle": "off"
+      },
+      "performance": {
+        // inline handlers are React's own idiom; revisit if a list gets slow
+        "noJsxPropsBind": "off"
+      },
+      "style": {
+        // components live in PascalCase files (App.tsx), as Vite made them
+        "useFilenamingConvention": "off"
+      }
+    }
+  }
+}
